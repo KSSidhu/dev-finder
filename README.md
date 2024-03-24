@@ -10,7 +10,7 @@ match my abilities as a programmer.
 First, run the development server:
 
 ```bash
-npm run dev
+docker compose up
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
