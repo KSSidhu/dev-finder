@@ -1,11 +1,11 @@
-FROM node:20-alpine
-
-WORKDIR /.
+FROM node:20-alpine AS development
+WORKDIR /app
 
 COPY ./package.json ./
-COPY . .
-
 RUN npm i
+
+COPY . .
+EXPOSE 3000
 
 CMD ["npm", "run", "dev"]
 
