@@ -1,4 +1,4 @@
-import { timestamp, pgTable, text, primaryKey, integer } from "drizzle-orm/pg-core"
+import { timestamp, pgTable, text, primaryKey, integer, uuid } from "drizzle-orm/pg-core"
 
 export const testing = pgTable("testing", {
   id: text("id").notNull().primaryKey(),
@@ -6,6 +6,7 @@ export const testing = pgTable("testing", {
 })
 
 import type { AdapterAccount } from "@auth/core/adapters"
+import { sql } from "drizzle-orm"
 
 export const users = pgTable("user", {
   id: text("id").notNull().primaryKey(),
@@ -60,6 +61,10 @@ export const verificationTokens = pgTable(
 )
 
 export const room = pgTable("room", {
+  id: uuid("uuid2")
+    .default(sql`gen_random_uuid()`)
+    .notNull()
+    .primaryKey(),
   userId: text("userId")
     .notNull()
     .references(() => users.id, { onDelete: "cascade" }),
