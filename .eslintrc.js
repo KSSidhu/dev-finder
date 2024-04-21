@@ -21,5 +21,13 @@ module.exports = {
     "no-undef": 0,
     "react/jsx-uses-react": "off",
     "react/react-in-jsx-scope": "off",
+
+    // Warn for unused vars, except those starting with _ for placeholders
+    "@typescript-eslint/no-unused-vars": [
+      "warn",
+      {
+        varsIgnorePattern: "^_",
+      },
+    ],
   },
 }
