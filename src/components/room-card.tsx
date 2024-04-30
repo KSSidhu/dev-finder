@@ -10,12 +10,15 @@ import { Room } from "@/db/schema"
 import { GithubIcon } from "lucide-react"
 import Link from "next/link"
 import { Button } from "./ui/button"
+import TagsList, { splitTags } from "./tags-list"
 
 interface Props {
   room: Room
 }
 
 export default function RoomCard({ room }: Props) {
+  const tags = splitTags(room.tags)
+
   return (
     <Card>
       <CardHeader>
@@ -34,7 +37,8 @@ export default function RoomCard({ room }: Props) {
           )}
         </CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className={"flex flex-col gap-4"}>
+        <TagsList tags={tags} />
         <p>{room.description}</p>
       </CardContent>
       <CardFooter>
