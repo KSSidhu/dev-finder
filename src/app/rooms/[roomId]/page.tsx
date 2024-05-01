@@ -2,6 +2,7 @@ import TagsList, { splitTags } from "@/components/tags-list"
 import { getRoom } from "@/data-access/rooms"
 import { GithubIcon } from "lucide-react"
 import Link from "next/link"
+import DevFinderVideo from "./video-player"
 
 interface Props {
   params: {
@@ -21,7 +22,7 @@ export default async function RoomPage({ params }: Props) {
     <div className={"grid grid-cols-4 h-full min-h-screen"}>
       <div className={"col-span-3 p-4 pr-2"}>
         <div className={"rounded-lg border bg-card text-card-foreground shadow-sm p-12"}>
-          {"Video Player"}
+          <DevFinderVideo roomId={roomId} />
         </div>
       </div>
       <div className={"col-span-1 p-4 pl-2"}>
