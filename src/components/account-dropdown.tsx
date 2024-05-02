@@ -7,12 +7,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { LogInIcon, LogOutIcon } from "lucide-react"
-import { signIn, signOut, useSession } from "next-auth/react"
+import { LogOutIcon } from "lucide-react"
+import { signOut, useSession } from "next-auth/react"
 
 export default function AccountDropdown() {
   const session = useSession()
-  const isLoggedIn = !!session.data
 
   return (
     <DropdownMenu>
@@ -27,22 +26,16 @@ export default function AccountDropdown() {
       <DropdownMenuContent>
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={handleAuthentication}>
-          {isLoggedIn ? (
-            <LogInIcon className={"mr-2"} />
-          ) : (
-            <LogOutIcon className={"mr-2"} />
-          )}
-          {isLoggedIn ? "Sign Out" : "Sign In"}
+          <LogOutIcon className={"mr-2"} />
+          {"Sign Out"}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   )
 
   function handleAuthentication() {
-    if (session.data) {
-      signOut()
-    } else {
-      signIn("google")
-    }
+    signOut({
+      callbackUrl: "/",
+    })
   }
 }

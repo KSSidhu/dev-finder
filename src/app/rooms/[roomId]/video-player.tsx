@@ -4,6 +4,7 @@ import "@stream-io/video-react-sdk/dist/css/styles.css"
 import {
   Call,
   CallControls,
+  CallParticipantsList,
   SpeakerLayout,
   StreamCall,
   StreamTheme,
@@ -13,6 +14,7 @@ import {
 import { useSession } from "next-auth/react"
 import { useEffect, useState } from "react"
 import { generateToken } from "./actions"
+import { useRouter } from "next/navigation"
 
 interface Props {
   roomId: string
@@ -24,6 +26,7 @@ export default function DevFinderVideo({ roomId }: Props) {
   const session = useSession()
   const [client, setClient] = useState<StreamVideoClient>()
   const [call, setCall] = useState<Call>()
+  const router = useRouter()
 
   useEffect(() => {
     if (!session.data) return
@@ -33,6 +36,8 @@ export default function DevFinderVideo({ roomId }: Props) {
       apiKey,
       user: {
         id: userId,
+        name: session.data.user.name || "User",
+        image: session.data.user.image || "",
       },
       tokenProvider: () => generateToken(userId),
     })
@@ -42,8 +47,15 @@ export default function DevFinderVideo({ roomId }: Props) {
     setCall(call)
 
     return () => {
-      call.leave()
-      client.disconnectUser()
+      // Camera doesn't seem to always disable when leaving call
+      call.camera.disable()
+      call
+        .leave()
+        .then(() => {
+          client.disconnectUser()
+        })
+        .catch((e) => console.log(e))
+      setCall(undefined)
       setClient(undefined)
     }
   }, [session])
@@ -55,7 +67,12 @@ export default function DevFinderVideo({ roomId }: Props) {
         <StreamTheme>
           <StreamCall call={call}>
             <SpeakerLayout />
-            <CallControls />
+            <CallControls
+              onLeave={() => {
+                router.push("/")
+              }}
+            />
+            <CallParticipantsList onClose={() => undefined} />
           </StreamCall>
         </StreamTheme>
       </StreamVideo>
