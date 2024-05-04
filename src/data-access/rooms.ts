@@ -1,13 +1,19 @@
 import { db } from "@/db"
 import { room } from "@/db/schema"
-import { eq } from "drizzle-orm"
+import { eq, like } from "drizzle-orm"
 import { unstable_noStore } from "next/cache"
 
-export async function getRooms() {
+export async function getRooms(search?: string) {
   // mark function as dynamic
   unstable_noStore()
 
-  const rooms = await db.query.room.findMany()
+  let where = undefined
+
+  if (search) where = like(room.tags, `%${search}%`)
+
+  const rooms = await db.query.room.findMany({
+    where,
+  })
   return rooms
 }
 

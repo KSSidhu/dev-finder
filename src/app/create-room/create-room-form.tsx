@@ -110,7 +110,7 @@ export default function CreateRoomForm() {
           )}
         />
 
-        <Button type="submit">Submit</Button>
+        <Button type="submit">{"Submit"}</Button>
       </form>
     </Form>
   )
