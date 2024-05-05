@@ -1,21 +1,31 @@
-import { Badge } from "./ui/badge"
+"use client"
+
+import { cn } from "@/lib/utils"
+import { useRouter } from "next/navigation"
+import { badgeVariants } from "./ui/badge"
 
 interface Props {
   tags: string[]
 }
 
 export default function TagsList({ tags }: Props) {
+  const router = useRouter()
+
   return (
     <div className={"flex gap-2 flex-wrap"}>
       {tags.map((tag) => (
-        <Badge key={tag} className={"w-fit"}>
+        <button
+          key={tag}
+          onClick={() => applyFilter(tag)}
+          className={cn(badgeVariants())}
+        >
           {tag}
-        </Badge>
+        </button>
       ))}
     </div>
   )
-}
 
-export function splitTags(tags: string) {
-  return tags.split(",").map((tag) => tag.trim())
+  function applyFilter(tag: string) {
+    router.push(`/?search=${tag}`)
+  }
 }

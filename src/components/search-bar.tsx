@@ -8,6 +8,7 @@ import { z } from "zod"
 import { Button } from "./ui/button"
 import { useRouter, useSearchParams } from "next/navigation"
 import { SearchIcon } from "lucide-react"
+import { useEffect } from "react"
 
 const formSchema = z.object({
   search: z.string().min(0).max(50),
@@ -25,6 +26,10 @@ export default function SearchBar() {
       search: search || "",
     },
   })
+
+  useEffect(() => {
+    form.setValue("search", search || "")
+  }, [search, form])
 
   return (
     <Form {...form}>

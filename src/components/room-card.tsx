@@ -7,10 +7,11 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { Room } from "@/db/schema"
+import { splitTags } from "@/lib/utils"
 import { GithubIcon } from "lucide-react"
 import Link from "next/link"
+import TagsList from "./tags-list"
 import { Button } from "./ui/button"
-import TagsList, { splitTags } from "./tags-list"
 
 interface Props {
   room: Room
