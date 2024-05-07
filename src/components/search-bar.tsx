@@ -10,11 +10,15 @@ import { useRouter, useSearchParams } from "next/navigation"
 import { SearchIcon } from "lucide-react"
 import { useEffect } from "react"
 
+interface Props {
+  rootUrl: string
+}
+
 const formSchema = z.object({
   search: z.string().min(0).max(50),
 })
 
-export default function SearchBar() {
+export default function SearchBar({ rootUrl }: Props) {
   const router = useRouter()
   const query = useSearchParams()
   const search = query.get("search")
@@ -63,12 +67,12 @@ export default function SearchBar() {
 
   function resetSearch() {
     form.setValue("search", "")
-    router.push("/")
+    router.push(rootUrl)
   }
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     if (values.search) {
-      router.push(`/?search=${values.search}`)
+      router.push(`${rootUrl}?search=${values.search}`)
     } else {
       resetSearch()
     }

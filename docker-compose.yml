@@ -1,5 +1,3 @@
-version: "3.9"
-
 services:
   dev-finder-app:
     container_name: dev-finder-app

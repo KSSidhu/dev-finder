@@ -19,6 +19,12 @@ export function Header() {
           {"Dev Finder"}
         </Link>
 
+        <nav>
+          <Link href={"/your-rooms"} className={"hover:underline"}>
+            {"Your Rooms"}
+          </Link>
+        </nav>
+
         <div className={"flex items-center gap-4"}>
           {session.data && <AccountDropdown />}
           {!session.data && (

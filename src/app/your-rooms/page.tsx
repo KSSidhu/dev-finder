@@ -1,7 +1,7 @@
 import RoomCard from "@/components/room-card"
 import SearchBar from "@/components/search-bar"
 import { Button } from "@/components/ui/button"
-import { getRooms } from "@/data-access/rooms"
+import { getUserRooms } from "@/data-access/rooms"
 import Link from "next/link"
 
 interface Props {
@@ -10,21 +10,21 @@ interface Props {
   }
 }
 
-export default async function Home({ searchParams }: Props) {
+export default async function YourRoomsPage({ searchParams }: Props) {
   const { search = "" } = searchParams
-  const rooms = await getRooms(search)
+  const rooms = await getUserRooms(search)
 
   return (
     <main className={"min-h-screen p-16"}>
       <div className={"flex justify-between items-center mb-8"}>
-        <h1 className={"text-4xl"}>{"Find Dev Rooms"}</h1>
+        <h1 className={"text-4xl"}>{"Your Rooms"}</h1>
         <Button asChild>
           <Link href={"/create-room"}>{"Create Room"}</Link>
         </Button>
       </div>
 
       <div className={"mb-8"}>
-        <SearchBar rootUrl={"/"} />
+        <SearchBar rootUrl={"/your-rooms"} />
       </div>
 
       <div className={"grid grid-cols-3 gap-4"}>
