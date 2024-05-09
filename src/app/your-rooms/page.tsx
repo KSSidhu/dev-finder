@@ -2,6 +2,7 @@ import RoomCard from "@/components/room-card"
 import SearchBar from "@/components/search-bar"
 import { Button } from "@/components/ui/button"
 import { getUserRooms } from "@/data-access/rooms"
+import { unstable_noStore } from "next/cache"
 import Link from "next/link"
 
 interface Props {
@@ -11,6 +12,9 @@ interface Props {
 }
 
 export default async function YourRoomsPage({ searchParams }: Props) {
+  // mark function as dynamic
+  unstable_noStore()
+
   const { search = "" } = searchParams
   const rooms = await getUserRooms(search)
 
@@ -29,7 +33,7 @@ export default async function YourRoomsPage({ searchParams }: Props) {
 
       <div className={"grid grid-cols-3 gap-4"}>
         {rooms.map((room) => (
-          <RoomCard key={room.id} room={room} />
+          <RoomCard key={room.id} room={room} canDelete />
         ))}
       </div>
     </main>

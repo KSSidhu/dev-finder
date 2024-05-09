@@ -1,3 +1,6 @@
+"use client"
+
+import { deleteRoomAction } from "@/app/your-rooms/actions"
 import {
   Card,
   CardContent,
@@ -8,20 +11,22 @@ import {
 } from "@/components/ui/card"
 import { Room } from "@/db/schema"
 import { splitTags } from "@/lib/utils"
-import { GithubIcon } from "lucide-react"
+import { GithubIcon, TrashIcon } from "lucide-react"
 import Link from "next/link"
+import ConfirmationDialog from "./confirmation-dialog"
 import TagsList from "./tags-list"
 import { Button } from "./ui/button"
 
 interface Props {
   room: Room
+  canDelete?: boolean
 }
 
-export default function RoomCard({ room }: Props) {
+export default function RoomCard({ room, canDelete = false }: Props) {
   const tags = splitTags(room.tags)
 
   return (
-    <Card>
+    <Card className={"flex flex-col justify-between"}>
       <CardHeader>
         <CardTitle>{room.name}</CardTitle>
         <CardDescription>
@@ -42,11 +47,30 @@ export default function RoomCard({ room }: Props) {
         <TagsList tags={tags} />
         <p>{room.description}</p>
       </CardContent>
-      <CardFooter>
+      <CardFooter className={"flex justify-between"}>
         <Button asChild>
           <Link href={`/rooms/${room.id}`}>{"Join Room"}</Link>
         </Button>
+
+        {canDelete && (
+          <ConfirmationDialog
+            title={"Are you sure you want to delete this room?"}
+            description={
+              "This action cannot be undone. This will permanently remove the room and any data associated with it."
+            }
+            onConfirm={deleteRoom}
+            triggerButton={
+              <Button variant={"destructive"}>
+                <TrashIcon className={"w-4 h-4"} />
+              </Button>
+            }
+          />
+        )}
       </CardFooter>
     </Card>
   )
+
+  async function deleteRoom() {
+    if (room.id) await deleteRoomAction(room.id)
+  }
 }

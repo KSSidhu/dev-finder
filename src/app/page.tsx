@@ -2,6 +2,7 @@ import RoomCard from "@/components/room-card"
 import SearchBar from "@/components/search-bar"
 import { Button } from "@/components/ui/button"
 import { getRooms } from "@/data-access/rooms"
+import { unstable_noStore } from "next/cache"
 import Link from "next/link"
 
 interface Props {
@@ -11,6 +12,9 @@ interface Props {
 }
 
 export default async function Home({ searchParams }: Props) {
+  // mark function as dynamic
+  unstable_noStore()
+
   const { search = "" } = searchParams
   const rooms = await getRooms(search)
 
