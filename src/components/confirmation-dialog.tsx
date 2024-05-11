@@ -14,18 +14,22 @@ interface Props {
   onConfirm: () => void
   title: string
   description?: string
-  triggerButton: React.ReactNode
+  triggerButton?: React.ReactNode
+  open?: boolean
+  onOpenChange?: (open: boolean) => void
 }
 
 export default function ConfirmationDialog({
   title,
+  open,
+  onOpenChange,
   description,
   triggerButton,
   onConfirm,
 }: Props) {
   return (
-    <AlertDialog>
-      <AlertDialogTrigger asChild>{triggerButton}</AlertDialogTrigger>
+    <AlertDialog open={open} onOpenChange={onOpenChange}>
+      {triggerButton && <AlertDialogTrigger asChild>{triggerButton}</AlertDialogTrigger>}
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>{title}</AlertDialogTitle>

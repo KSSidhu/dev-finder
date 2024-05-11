@@ -1,3 +1,4 @@
+import EmptyState from "@/components/empty-state"
 import RoomCard from "@/components/room-card"
 import SearchBar from "@/components/search-bar"
 import { Button } from "@/components/ui/button"
@@ -36,6 +37,17 @@ export default async function YourRoomsPage({ searchParams }: Props) {
           <RoomCard key={room.id} room={room} canDelete canEdit />
         ))}
       </div>
+
+      {rooms.length === 0 && (
+        <EmptyState
+          title={"You have no rooms...Try making one!"}
+          button={
+            <Button asChild>
+              <Link href={"/create-room"}>{"Create Room"}</Link>
+            </Button>
+          }
+        />
+      )}
     </main>
   )
 }
