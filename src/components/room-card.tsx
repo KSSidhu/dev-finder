@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/card"
 import { Room } from "@/db/schema"
 import { splitTags } from "@/lib/utils"
-import { GithubIcon, TrashIcon } from "lucide-react"
+import { GithubIcon, PencilIcon, TrashIcon } from "lucide-react"
 import Link from "next/link"
 import ConfirmationDialog from "./confirmation-dialog"
 import TagsList from "./tags-list"
@@ -20,14 +20,23 @@ import { Button } from "./ui/button"
 interface Props {
   room: Room
   canDelete?: boolean
+  canEdit?: boolean
 }
 
-export default function RoomCard({ room, canDelete = false }: Props) {
+export default function RoomCard({ room, canDelete = false, canEdit = false }: Props) {
   const tags = splitTags(room.tags)
 
   return (
     <Card className={"flex flex-col justify-between"}>
-      <CardHeader>
+      <CardHeader className={"relative"}>
+        {canEdit && (
+          <Button size={"icon"} className={"absolute top-2 right-2"}>
+            <Link href={`/edit-room/${room.id}`}>
+              <PencilIcon />
+            </Link>
+          </Button>
+        )}
+
         <CardTitle>{room.name}</CardTitle>
         <CardDescription>
           {room.githubRepo && (

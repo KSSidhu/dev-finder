@@ -20,7 +20,7 @@ export function Header() {
         </Link>
 
         {session.data && (
-          <nav className={"flex gap-4"}>
+          <nav className={"flex gap-8"}>
             <Link href={"/browse"} className={"hover:underline"}>
               {"Browse"}
             </Link>

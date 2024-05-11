@@ -33,7 +33,7 @@ export default async function YourRoomsPage({ searchParams }: Props) {
 
       <div className={"grid grid-cols-3 gap-4"}>
         {rooms.map((room) => (
-          <RoomCard key={room.id} room={room} canDelete />
+          <RoomCard key={room.id} room={room} canDelete canEdit />
         ))}
       </div>
     </main>
