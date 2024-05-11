@@ -12,8 +12,8 @@ export function Header() {
   const session = useSession()
 
   return (
-    <header className={"bg-gray-100 dark:bg-gray-900 py-2 px-4 mx-auto z-10 relative"}>
-      <div className={"flex justify-between items-center"}>
+    <header className={"bg-gray-100 dark:bg-gray-900 py-2 px-4 z-10 relative"}>
+      <div className={"flex justify-between items-center container mx-auto"}>
         <Link href={"/"} className={"flex items-center gap-2 text-xl hover:underline"}>
           <Image src={"/icon.png"} alt={""} height={"60"} width={"60"} />
           {"Dev Finder"}

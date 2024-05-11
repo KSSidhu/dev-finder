@@ -11,6 +11,7 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import { useToast } from "@/components/ui/use-toast"
 import { Room } from "@/db/schema"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
@@ -29,6 +30,7 @@ const formSchema = z.object({
 })
 
 export default function EditRoomForm({ room }: Props) {
+  const { toast } = useToast()
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -122,6 +124,11 @@ export default function EditRoomForm({ room }: Props) {
     await editRoomAction({
       id: room.id,
       ...values,
+    })
+
+    toast({
+      title: "Room Updated",
+      description: "Room updated successfully",
     })
   }
 }

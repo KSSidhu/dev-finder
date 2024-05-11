@@ -43,13 +43,23 @@ export async function getRoom(roomId: string) {
 }
 
 export async function createRoom(roomData: Omit<Room, "id" | "userId">, userId: string) {
-  await db.insert(room).values({ ...roomData, userId })
+  const inserted = await db
+    .insert(room)
+    .values({ ...roomData, userId })
+    .returning()
+
+  return inserted[0]
 }
 
 export async function editRoom(roomData: Room) {
   if (!roomData.id) throw new Error("Cannot find room.")
 
-  await db.update(room).set(roomData).where(eq(room.id, roomData.id))
+  const updated = await db
+    .update(room)
+    .set(roomData)
+    .where(eq(room.id, roomData.id))
+    .returning()
+  return updated[0]
 }
 
 export async function deleteRoom(roomId: string) {

@@ -1,5 +1,6 @@
 "use client"
 
+import { useToast } from "@/components/ui/use-toast"
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -26,6 +27,7 @@ const formSchema = z.object({
 
 export default function CreateRoomForm() {
   const router = useRouter()
+  const { toast } = useToast()
 
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
@@ -118,7 +120,11 @@ export default function CreateRoomForm() {
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof formSchema>) {
     // TODO: invoke a server action to store details in DB
-    await createRoomAction(values)
-    router.push("/")
+    const room = await createRoomAction(values)
+    toast({
+      title: "Room Created",
+      description: "Your room was created successfully",
+    })
+    router.push(`/rooms/${room.id}`)
   }
 }
