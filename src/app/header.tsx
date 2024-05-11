@@ -12,19 +12,23 @@ export function Header() {
   const session = useSession()
 
   return (
-    <header className={"bg-gray-100 dark:bg-gray-900 py-2 px-4 mx-auto"}>
+    <header className={"bg-gray-100 dark:bg-gray-900 py-2 px-4 mx-auto z-10 relative"}>
       <div className={"flex justify-between items-center"}>
         <Link href={"/"} className={"flex items-center gap-2 text-xl hover:underline"}>
           <Image src={"/icon.png"} alt={""} height={"60"} width={"60"} />
           {"Dev Finder"}
         </Link>
 
-        <nav>
-          <Link href={"/your-rooms"} className={"hover:underline"}>
-            {"Your Rooms"}
-          </Link>
-        </nav>
-
+        {session.data && (
+          <nav className={"flex gap-4"}>
+            <Link href={"/browse"} className={"hover:underline"}>
+              {"Browse"}
+            </Link>
+            <Link href={"/your-rooms"} className={"hover:underline"}>
+              {"Your Rooms"}
+            </Link>
+          </nav>
+        )}
         <div className={"flex items-center gap-4"}>
           {session.data && <AccountDropdown />}
           {!session.data && (
