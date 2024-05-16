@@ -69,7 +69,7 @@ export default function DevFinderVideo({ roomId }: Props) {
             <SpeakerLayout />
             <CallControls
               onLeave={() => {
-                router.push("/")
+                router.push("/browse")
               }}
             />
             <CallParticipantsList onClose={() => undefined} />

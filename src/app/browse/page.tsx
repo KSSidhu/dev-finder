@@ -33,7 +33,7 @@ export default async function Home({ searchParams }: Props) {
       </div>
 
       <div className={"mb-8"}>
-        <SearchBar rootUrl={"/"} />
+        <SearchBar rootUrl={"/browse"} />
       </div>
 
       <div className={"grid grid-cols-3 gap-4"}>
